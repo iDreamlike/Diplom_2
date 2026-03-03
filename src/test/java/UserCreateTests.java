@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.Requests;
 
+import static config.RestAssuredConfig.configRestAssured;
+
 public class UserCreateTests {
     private Response response;
     private Requests requests;
@@ -12,8 +14,9 @@ public class UserCreateTests {
     @BeforeEach
     void setUp() {
         requests = new Requests("https://stellarburgers.education-services.ru");
+        configRestAssured();
         userJsonBody = userJsonBody.toBuilder()
-                .email("RandomUser9992@mail.ru")
+                .email("RandomUser9993@mail.ru")
                 .password("1234")
                 .name("Вася")
                 .build();
