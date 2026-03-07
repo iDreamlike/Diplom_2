@@ -3,17 +3,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import util.BaseTest;
-import net.datafaker.Faker;
 
 import static config.RestAssuredConfig.configRestAssured;
 import static constants.Messages.ERROR_TOKEN_MESSAGE;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static util.UserHelper.*;
+import static data.UserCreateData.getRandomUser;
 
 public class UserCreateTests extends BaseTest {
     private Response response;
-    private final Faker faker = new Faker();
 
     @BeforeAll
     static void setUpOnce() {
@@ -23,17 +22,13 @@ public class UserCreateTests extends BaseTest {
     @AfterEach
     void tearDown() {
         if (accessToken != null) {
-            deleteUser(accessToken);
+            deleteUserIfExists();
         }
     }
 
     @Test
     void createUniqueUserTest() {
-        user = user.toBuilder()
-                .email(faker.internet().emailAddress())
-                .password(faker.lorem().characters(10))
-                .name(faker.name().firstName())
-                .build();
+        user = getRandomUser();
         response = registerUser(user);
 
         response.then()

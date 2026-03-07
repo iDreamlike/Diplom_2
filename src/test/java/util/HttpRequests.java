@@ -1,12 +1,10 @@
 package util;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class Requests {
+public class HttpRequests {
 
     public Response get(String endpoint) {
         return given()
@@ -21,7 +19,7 @@ public class Requests {
 
     public static Response delete(String endpoint, String accessToken) {
         return given()
-        .header("Authorization", accessToken)
-        .delete(endpoint);
+                .header("Authorization", accessToken)
+                .delete(endpoint);
     }
 }

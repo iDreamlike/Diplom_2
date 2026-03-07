@@ -5,12 +5,10 @@ import io.restassured.response.Response;
 
 import static constants.Urls.REGISTER_ENDPOINT;
 import static constants.Urls.USER_ENDPOINT;
-import static util.Requests.post;
-import static util.Requests.delete;
+import static util.HttpRequests.post;
+import static util.HttpRequests.delete;
 
 public class UserHelper {
-
-//    private Requests requests = new Requests();
 
     public static String getAccessToken(Response response) {
         return response.path("accessToken");
@@ -20,8 +18,8 @@ public class UserHelper {
         return post(REGISTER_ENDPOINT, user);
     }
 
-    public static Response deleteUser(String accessToken) {
-        return delete(USER_ENDPOINT, accessToken);
+    public static void deleteUser(String accessToken) {
+        delete(USER_ENDPOINT, accessToken);
     }
 
 }
