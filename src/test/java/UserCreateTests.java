@@ -1,47 +1,50 @@
-import dto.UserBodyDto;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Requests;
+import util.BaseTest;
 import net.datafaker.Faker;
 
 import static config.RestAssuredConfig.configRestAssured;
-import static constants.Urls.REGISTER_ENDPOINT;
-import static constants.Urls.USER_ENDPOINT;
+import static constants.Messages.ERROR_TOKEN_MESSAGE;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static util.UserHelper.*;
 
-public class UserCreateTests {
+public class UserCreateTests extends BaseTest {
     private Response response;
-    private Requests requests = new Requests();
-    private UserBodyDto userJsonBody = new UserBodyDto();
     private final Faker faker = new Faker();
-    private String accessToken;
 
     @BeforeAll
     static void setUpOnce() {
         configRestAssured();
     }
 
-//    @BeforeEach
-//    void setUp() {
-//        requests = new Requests();
-//    }
-
     @AfterEach
     void tearDown() {
-        requests.delete(USER_ENDPOINT, accessToken);
+        if (accessToken != null) {
+            deleteUser(accessToken);
+        }
     }
 
     @Test
     void createUniqueUserTest() {
-        userJsonBody = userJsonBody.toBuilder()
+        user = user.toBuilder()
                 .email(faker.internet().emailAddress())
                 .password(faker.lorem().characters(10))
                 .name(faker.name().firstName())
                 .build();
-        response = requests.post(REGISTER_ENDPOINT, userJsonBody);
-        response.then().assertThat().statusCode(200);
-        accessToken = response.getBody().jsonPath().getString("accessToken");
+        response = registerUser(user);
+
+        response.then()
+                .statusCode(200)
+                .body("success", is(true))
+                .body("user.email", equalTo(user.getEmail()))
+                .body("user.name", equalTo(user.getName()))
+                .body("accessToken", notNullValue())
+                .body("refreshToken", notNullValue());
+
+        accessToken = getAccessToken(response);
+        assertNotNull(accessToken, ERROR_TOKEN_MESSAGE);
     }
 }

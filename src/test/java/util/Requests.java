@@ -13,13 +13,13 @@ public class Requests {
                 .get(endpoint);
     }
 
-    public Response post(String endpoint, Object jsonBody) {
+    public static Response post(String endpoint, Object user) {
         return given()
-                .body(jsonBody)
+                .body(user)
                 .post(endpoint);
     }
 
-    public Response delete(String endpoint, String accessToken) {
+    public static Response delete(String endpoint, String accessToken) {
         return given()
         .header("Authorization", accessToken)
         .delete(endpoint);
