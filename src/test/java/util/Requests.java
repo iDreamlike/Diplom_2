@@ -7,15 +7,21 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class Requests {
-    public Requests(String baseUrl) {
-        RestAssured.baseURI = baseUrl;
-    }
 
     public Response get(String endpoint) {
-        return given().contentType(ContentType.JSON).get(endpoint);
+        return given()
+                .get(endpoint);
     }
 
     public Response post(String endpoint, Object jsonBody) {
-        return given().contentType(ContentType.JSON).body(jsonBody).post(endpoint);
+        return given()
+                .body(jsonBody)
+                .post(endpoint);
+    }
+
+    public Response delete(String endpoint, String accessToken) {
+        return given()
+        .header("Authorization", accessToken)
+        .delete(endpoint);
     }
 }
