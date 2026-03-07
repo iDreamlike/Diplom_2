@@ -1,18 +1,18 @@
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.BaseTest;
 
 import static config.RestAssuredConfig.configRestAssured;
-import static constants.Messages.ERROR_TOKEN_MESSAGE;
+import static constants.Messages.*;
+import static data.UserCreateData.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static util.UserHelper.*;
-import static data.UserCreateData.getRandomUser;
 
 public class UserCreateTests extends BaseTest {
-    private Response response;
 
     @BeforeAll
     static void setUpOnce() {
@@ -27,9 +27,10 @@ public class UserCreateTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Создание уникального пользователя")
     void createUniqueUserTest() {
         user = getRandomUser();
-        response = registerUser(user);
+        Response response = registerUser(user);
 
         response.then()
                 .statusCode(200)
@@ -41,5 +42,52 @@ public class UserCreateTests extends BaseTest {
 
         accessToken = getAccessToken(response);
         assertNotNull(accessToken, ERROR_TOKEN_MESSAGE);
+    }
+
+    @Test
+    @DisplayName("Создание пользователя, который уже зарегистрирован")
+    void createExistsUserTest() {
+        user = getRandomUser();
+        Response firstResponse = registerUser(user);
+        accessToken = getAccessToken(firstResponse);
+        Response secondResponse = registerUser(user);
+
+        secondResponse.then()
+                .statusCode(403)
+                .body("success", is(false))
+                .body("message", equalTo(ERROR_REGISTER_EXISTS_USER_MESSAGE));
+    }
+
+    @Test
+    @DisplayName("Создание пользователя без обязательного поля email")
+    void createUserWithoutEmailTest() {
+        user = getUserWithoutEmail();
+        Response response = registerUser(user);
+        response.then()
+                .statusCode(403)
+                .body("success", is(false))
+                .body("message", equalTo(ERROR_REGISTER_WITHOUT_REQUIRED_FIELDS_MESSAGE));
+    }
+
+    @Test
+    @DisplayName("Создание пользователя без обязательного поля password")
+    void createUserWithoutPasswordTest() {
+        user = getUserWithoutPassword();
+        Response response = registerUser(user);
+        response.then()
+                .statusCode(403)
+                .body("success", is(false))
+                .body("message", equalTo(ERROR_REGISTER_WITHOUT_REQUIRED_FIELDS_MESSAGE));
+    }
+
+    @Test
+    @DisplayName("Создание пользователя без обязательного поля name")
+    void createUserWithoutNameTest() {
+        user = getUserWithoutName();
+        Response response = registerUser(user);
+        response.then()
+                .statusCode(403)
+                .body("success", is(false))
+                .body("message", equalTo(ERROR_REGISTER_WITHOUT_REQUIRED_FIELDS_MESSAGE));
     }
 }
