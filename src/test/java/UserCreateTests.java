@@ -17,6 +17,7 @@ public class UserCreateTests extends BaseTest {
     void createUniqueUserTest() {
         user = createUserData();
         Response response = registerUser(user);
+        accessToken = getAccessToken(response);
 
         response.then()
                 .statusCode(200)
@@ -26,7 +27,6 @@ public class UserCreateTests extends BaseTest {
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue());
 
-        accessToken = getAccessToken(response);
         assertNotNull(accessToken, ERROR_TOKEN_MESSAGE);
     }
 

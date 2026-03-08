@@ -11,4 +11,12 @@ public class OrderDataGenerator {
     public static List<String> getIngredients() {
         return Arrays.asList(BUN_ID, MEAT_ID, SAUCE_ID);
     }
+
+    public static List<String> getNoIngredients() {
+        return List.of();
+    }
+
+    public static List<String> getIncorrectIngredients() {
+        return Arrays.asList("incorrect-Hash-111", "incorrect-Hash-222", "incorrect-Hash-333");
+    }
 }

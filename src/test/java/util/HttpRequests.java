@@ -9,9 +9,14 @@ import static io.restassured.RestAssured.given;
 
 public class HttpRequests {
 
-    public Response get(String endpoint) {
+    public static Response get(String endpoint, String accessToken) {
         return given()
+                .header("Authorization", accessToken)
                 .get(endpoint);
+    }
+
+    public static Response get(String endpoint) {
+        return given().get(endpoint);
     }
 
     public static Response post(String endpoint, Object user) {
@@ -43,6 +48,12 @@ public class HttpRequests {
         return given()
                 .body(Map.of("ingredients", ingredients))
                 .header("Authorization", accessToken)
+                .post(endpoint);
+    }
+
+    public static Response post(String endpoint, List<String> ingredients) {
+        return given()
+                .body(Map.of("ingredients", ingredients))
                 .post(endpoint);
     }
 }

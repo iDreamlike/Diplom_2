@@ -37,10 +37,7 @@ public class UserLoginTests extends BaseTest {
     @Test
     @DisplayName("Логин с неверным логином и паролем")
     public void loginWithIncorrectPassword() {
-        user = createUserData();
-        Response responseFromRegister = registerUser(user);
-        accessToken = getAccessToken(responseFromRegister);
-        assertNotNull(accessToken, ERROR_TOKEN_MESSAGE);
+        createUser();
         login = new LoginBodyDto(user.getEmail(), "Incorrect Password");
 
         Response responseFromLogin = loginUser(login);
@@ -50,7 +47,7 @@ public class UserLoginTests extends BaseTest {
                 .body("success", is(false))
                 .body("message", equalTo(ERROR_LOGIN_INCORRECT_MESSAGE));
 
-        accessToken = getAccessToken(responseFromRegister);
+
         assertNotNull(accessToken, ERROR_TOKEN_MESSAGE);
     }
 }

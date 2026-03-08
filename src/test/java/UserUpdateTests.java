@@ -14,9 +14,7 @@ public class UserUpdateTests extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        user = createUserData();
-        Response responseFromRegister = registerUser(user);
-        accessToken = getAccessToken(responseFromRegister);
+        createUser();
     }
 
     @Test
