@@ -1,6 +1,5 @@
 import dto.LoginBodyDto;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.BaseTest;
@@ -14,11 +13,6 @@ import static org.hamcrest.Matchers.*;
 
 @DisplayName("Логин пользователя")
 public class UserLoginTests extends BaseTest {
-
-    @AfterEach
-    void tearDown() {
-        deleteUserIfExists();
-    }
 
     @Test
     @DisplayName("Логин под существующим пользователем")
@@ -44,19 +38,19 @@ public class UserLoginTests extends BaseTest {
     @DisplayName("Логин с неверным логином и паролем")
     public void loginWithIncorrectPassword() {
         user = createUser();
-        Response registerResponse = registerUser(user);
-        accessToken = getAccessToken(registerResponse);
+        Response responseFromRegister = registerUser(user);
+        accessToken = getAccessToken(responseFromRegister);
         assertNotNull(accessToken, ERROR_TOKEN_MESSAGE);
         login = new LoginBodyDto(user.getEmail(), "Incorrect Password");
 
-        Response loginResponse = loginUser(login);
+        Response responseFromLogin = loginUser(login);
 
-        loginResponse.then()
+        responseFromLogin.then()
                 .statusCode(401)
                 .body("success", is(false))
                 .body("message", equalTo(ERROR_LOGIN_INCORRECT_MESSAGE));
 
-        accessToken = getAccessToken(registerResponse);
+        accessToken = getAccessToken(responseFromRegister);
         assertNotNull(accessToken, ERROR_TOKEN_MESSAGE);
     }
 }

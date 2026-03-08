@@ -1,5 +1,4 @@
 import io.restassured.response.Response;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.BaseTest;
@@ -12,11 +11,6 @@ import static util.UserHelper.*;
 
 @DisplayName("Создание пользователя")
 public class UserCreateTests extends BaseTest {
-
-    @AfterEach
-    void tearDown() {
-            deleteUserIfExists();
-    }
 
     @Test
     @DisplayName("Создание уникального пользователя")

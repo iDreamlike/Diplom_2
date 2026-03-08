@@ -3,6 +3,8 @@ package data;
 import dto.UserBodyDto;
 import net.datafaker.Faker;
 
+import static util.UserHelper.deleteUser;
+
 public class UserCreateData {
 
     private static final Faker faker = new Faker();

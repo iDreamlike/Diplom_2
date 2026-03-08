@@ -2,6 +2,7 @@ package util;
 
 import dto.LoginBodyDto;
 import dto.UserBodyDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
 import static config.RestAssuredConfig.configRestAssured;
@@ -15,6 +16,11 @@ public class BaseTest {
     @BeforeAll
     static void setUpOnce() {
         configRestAssured();
+    }
+
+    @AfterEach
+    void tearDown() {
+        deleteUserIfExists();
     }
 
     protected void deleteUserIfExists() {
