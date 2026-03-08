@@ -1,35 +1,27 @@
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.BaseTest;
 
-import static config.RestAssuredConfig.configRestAssured;
 import static constants.Messages.*;
 import static data.UserCreateData.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static util.UserHelper.*;
 
+@DisplayName("Создание пользователя")
 public class UserCreateTests extends BaseTest {
-
-    @BeforeAll
-    static void setUpOnce() {
-        configRestAssured();
-    }
 
     @AfterEach
     void tearDown() {
-        if (accessToken != null) {
             deleteUserIfExists();
-        }
     }
 
     @Test
     @DisplayName("Создание уникального пользователя")
     void createUniqueUserTest() {
-        user = getRandomUser();
+        user = createUser();
         Response response = registerUser(user);
 
         response.then()
@@ -47,7 +39,7 @@ public class UserCreateTests extends BaseTest {
     @Test
     @DisplayName("Создание пользователя, который уже зарегистрирован")
     void createExistsUserTest() {
-        user = getRandomUser();
+        user = createUser();
         Response firstResponse = registerUser(user);
         accessToken = getAccessToken(firstResponse);
         Response secondResponse = registerUser(user);
@@ -61,7 +53,7 @@ public class UserCreateTests extends BaseTest {
     @Test
     @DisplayName("Создание пользователя без обязательного поля email")
     void createUserWithoutEmailTest() {
-        user = getUserWithoutEmail();
+        user = createUserWithoutEmail();
         Response response = registerUser(user);
         response.then()
                 .statusCode(403)
@@ -72,7 +64,7 @@ public class UserCreateTests extends BaseTest {
     @Test
     @DisplayName("Создание пользователя без обязательного поля password")
     void createUserWithoutPasswordTest() {
-        user = getUserWithoutPassword();
+        user = createUserWithoutPassword();
         Response response = registerUser(user);
         response.then()
                 .statusCode(403)
@@ -83,7 +75,7 @@ public class UserCreateTests extends BaseTest {
     @Test
     @DisplayName("Создание пользователя без обязательного поля name")
     void createUserWithoutNameTest() {
-        user = getUserWithoutName();
+        user = createUserWithoutName();
         Response response = registerUser(user);
         response.then()
                 .statusCode(403)

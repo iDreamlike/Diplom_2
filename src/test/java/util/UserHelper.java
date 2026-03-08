@@ -1,10 +1,10 @@
 package util;
 
+import dto.LoginBodyDto;
 import dto.UserBodyDto;
 import io.restassured.response.Response;
 
-import static constants.Urls.REGISTER_ENDPOINT;
-import static constants.Urls.USER_ENDPOINT;
+import static constants.Urls.*;
 import static util.HttpRequests.post;
 import static util.HttpRequests.delete;
 
@@ -20,6 +20,10 @@ public class UserHelper {
 
     public static void deleteUser(String accessToken) {
         delete(USER_ENDPOINT, accessToken);
+    }
+
+    public static Response loginUser(LoginBodyDto login) {
+        return post(LOGIN_ENDPOINT, login);
     }
 
 }

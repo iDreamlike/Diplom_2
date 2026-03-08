@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserBodyDto {
+public class LoginBodyDto {
     private String email;
     private String password;
-    private String name;
-//    private String accessToken;
-//    private String refreshToken;
 }
