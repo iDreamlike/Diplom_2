@@ -29,4 +29,10 @@ public class HttpRequests {
                 .header("Authorization", accessToken)
                 .patch(endpoint);
     }
+
+    public static Response patch(String endpoint, Object user) {
+        return given()
+                .body(user)
+                .patch(endpoint);
+    }
 }

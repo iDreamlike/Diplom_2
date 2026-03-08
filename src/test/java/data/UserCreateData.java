@@ -52,4 +52,8 @@ public class UserCreateData {
     public static void updateUserPasswordData(UserBodyDto user) {
         user.setPassword(faker.lorem().characters(10));
     }
+
+    public static void updateUserNameData(UserBodyDto user) {
+        user.setName(faker.name().firstName());
+    }
 }

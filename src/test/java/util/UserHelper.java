@@ -25,8 +25,11 @@ public class UserHelper {
         return post(LOGIN_ENDPOINT, login);
     }
 
-    public static Response updateUser(UserBodyDto user, String accessToken) {
+    public static Response updateUserWithAuthorization(UserBodyDto user, String accessToken) {
         return patch(USER_ENDPOINT, user, accessToken);
     }
 
+    public static Response updateUserWithoutAuthorization(UserBodyDto user) {
+        return patch(USER_ENDPOINT, user);
+    }
 }

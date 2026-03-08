@@ -6,4 +6,5 @@ public class Messages {
     public static final String ERROR_REGISTER_EXISTS_USER_MESSAGE = "User already exists";
     public static final String ERROR_REGISTER_WITHOUT_REQUIRED_FIELDS_MESSAGE = "Email, password and name are required fields";
     public static final String ERROR_LOGIN_INCORRECT_MESSAGE = "email or password are incorrect";
+    public static final String ERROR_AUTHORIZATION_MESSAGE = "You should be authorised";
 }
