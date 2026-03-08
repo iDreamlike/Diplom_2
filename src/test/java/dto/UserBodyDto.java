@@ -13,6 +13,4 @@ public class UserBodyDto {
     private String email;
     private String password;
     private String name;
-//    private String accessToken;
-//    private String refreshToken;
 }

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import util.BaseTest;
 
 import static constants.Messages.*;
-import static data.UserCreateData.*;
+import static data.UserDataGenerator.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static util.UserHelper.*;

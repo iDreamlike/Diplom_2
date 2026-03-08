@@ -6,7 +6,7 @@ import util.BaseTest;
 
 import static constants.Messages.ERROR_LOGIN_INCORRECT_MESSAGE;
 import static constants.Messages.ERROR_TOKEN_MESSAGE;
-import static data.UserCreateData.createUserData;
+import static data.UserDataGenerator.createUserData;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static util.UserHelper.*;
 import static org.hamcrest.Matchers.*;

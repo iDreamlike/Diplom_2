@@ -3,7 +3,7 @@ package data;
 import dto.UserBodyDto;
 import net.datafaker.Faker;
 
-public class UserCreateData {
+public class UserDataGenerator {
 
     private static final Faker faker = new Faker();
 

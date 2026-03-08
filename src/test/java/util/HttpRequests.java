@@ -2,6 +2,9 @@ package util;
 
 import io.restassured.response.Response;
 
+import java.util.List;
+import java.util.Map;
+
 import static io.restassured.RestAssured.given;
 
 public class HttpRequests {
@@ -34,5 +37,12 @@ public class HttpRequests {
         return given()
                 .body(user)
                 .patch(endpoint);
+    }
+
+    public static Response post(String endpoint, List<String> ingredients, String accessToken) {
+        return given()
+                .body(Map.of("ingredients", ingredients))
+                .header("Authorization", accessToken)
+                .post(endpoint);
     }
 }

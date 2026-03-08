@@ -1,22 +1,27 @@
 import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.BaseTest;
 
 import static constants.Messages.ERROR_AUTHORIZATION_MESSAGE;
-import static data.UserCreateData.*;
+import static data.UserDataGenerator.*;
 import static org.hamcrest.Matchers.*;
 import static util.UserHelper.*;
 
 @DisplayName("Изменение данных пользователя")
 public class UserUpdateTests extends BaseTest {
 
-    @Test
-    @DisplayName("Изменение поля email. Пользователь авторизован")
-    void userUpdateEmailAuthorizedTest() {
+    @BeforeEach
+    public void setUp() {
         user = createUserData();
         Response responseFromRegister = registerUser(user);
         accessToken = getAccessToken(responseFromRegister);
+    }
+
+    @Test
+    @DisplayName("Изменение поля email. Пользователь авторизован")
+    void userUpdateEmailAuthorizedTest() {
         updateUserEmailData(user);
         Response responseFromUpdate = updateUserWithAuthorization(user, accessToken);
 
@@ -30,9 +35,6 @@ public class UserUpdateTests extends BaseTest {
     @Test
     @DisplayName("Изменение поля password. Пользователь авторизован")
     void userUpdatePasswordAuthorizedTest() {
-        user = createUserData();
-        Response responseFromRegister = registerUser(user);
-        accessToken = getAccessToken(responseFromRegister);
         updateUserPasswordData(user);
         Response responseFromUpdate = updateUserWithAuthorization(user, accessToken);
 
@@ -46,9 +48,6 @@ public class UserUpdateTests extends BaseTest {
     @Test
     @DisplayName("Изменение поля name. Пользователь авторизован")
     void userUpdateNameAuthorizedTest() {
-        user = createUserData();
-        Response responseFromRegister = registerUser(user);
-        accessToken = getAccessToken(responseFromRegister);
         updateUserNameData(user);
         Response responseFromUpdate = updateUserWithAuthorization(user, accessToken);
 
@@ -62,9 +61,6 @@ public class UserUpdateTests extends BaseTest {
     @Test
     @DisplayName("Изменение поля email. Пользователь не авторизован")
     void userUpdateEmailUnauthorizedTest() {
-        user = createUserData();
-        Response responseFromRegister = registerUser(user);
-        accessToken = getAccessToken(responseFromRegister);
         updateUserEmailData(user);
         Response responseFromUpdate = updateUserWithoutAuthorization(user);
 
@@ -77,9 +73,6 @@ public class UserUpdateTests extends BaseTest {
     @Test
     @DisplayName("Изменение поля password. Пользователь не авторизован")
     void userUpdatePasswordUnauthorizedTest() {
-        user = createUserData();
-        Response responseFromRegister = registerUser(user);
-        accessToken = getAccessToken(responseFromRegister);
         updateUserPasswordData(user);
         Response responseFromUpdate = updateUserWithoutAuthorization(user);
 
@@ -92,9 +85,6 @@ public class UserUpdateTests extends BaseTest {
     @Test
     @DisplayName("Изменение поля name. Пользователь не авторизован")
     void userUpdateNameUnauthorizedTest() {
-        user = createUserData();
-        Response responseFromRegister = registerUser(user);
-        accessToken = getAccessToken(responseFromRegister);
         updateUserNameData(user);
         Response responseFromUpdate = updateUserWithoutAuthorization(user);
 
