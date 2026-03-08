@@ -5,8 +5,7 @@ import dto.UserBodyDto;
 import io.restassured.response.Response;
 
 import static constants.Urls.*;
-import static util.HttpRequests.post;
-import static util.HttpRequests.delete;
+import static util.HttpRequests.*;
 
 public class UserHelper {
 
@@ -24,6 +23,10 @@ public class UserHelper {
 
     public static Response loginUser(LoginBodyDto login) {
         return post(LOGIN_ENDPOINT, login);
+    }
+
+    public static Response updateUser(UserBodyDto user, String accessToken) {
+        return patch(USER_ENDPOINT, user, accessToken);
     }
 
 }

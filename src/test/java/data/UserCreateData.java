@@ -3,13 +3,11 @@ package data;
 import dto.UserBodyDto;
 import net.datafaker.Faker;
 
-import static util.UserHelper.deleteUser;
-
 public class UserCreateData {
 
     private static final Faker faker = new Faker();
 
-    public static UserBodyDto createUser() {
+    public static UserBodyDto createUserData() {
         UserBodyDto user = new UserBodyDto();
                 user = user.toBuilder()
                 .email(faker.internet().emailAddress())
@@ -45,5 +43,13 @@ public class UserCreateData {
                 .password(faker.lorem().characters(10))
                 .build();
         return user;
+    }
+
+    public static void updateUserEmailData(UserBodyDto user) {
+        user.setEmail(faker.internet().emailAddress());
+    }
+
+    public static void updateUserPasswordData(UserBodyDto user) {
+        user.setPassword(faker.lorem().characters(10));
     }
 }

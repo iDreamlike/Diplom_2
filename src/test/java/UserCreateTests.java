@@ -15,7 +15,7 @@ public class UserCreateTests extends BaseTest {
     @Test
     @DisplayName("Создание уникального пользователя")
     void createUniqueUserTest() {
-        user = createUser();
+        user = createUserData();
         Response response = registerUser(user);
 
         response.then()
@@ -33,7 +33,7 @@ public class UserCreateTests extends BaseTest {
     @Test
     @DisplayName("Создание пользователя, который уже зарегистрирован")
     void createExistsUserTest() {
-        user = createUser();
+        user = createUserData();
         Response firstResponse = registerUser(user);
         accessToken = getAccessToken(firstResponse);
         Response secondResponse = registerUser(user);

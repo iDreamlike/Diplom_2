@@ -17,9 +17,16 @@ public class HttpRequests {
                 .post(endpoint);
     }
 
-    public static Response delete(String endpoint, String accessToken) {
-        return given()
+    public static void delete(String endpoint, String accessToken) {
+        given()
                 .header("Authorization", accessToken)
                 .delete(endpoint);
+    }
+
+    public static Response patch(String endpoint, Object user, String accessToken) {
+        return given()
+                .body(user)
+                .header("Authorization", accessToken)
+                .patch(endpoint);
     }
 }

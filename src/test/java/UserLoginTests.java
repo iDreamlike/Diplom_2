@@ -6,7 +6,7 @@ import util.BaseTest;
 
 import static constants.Messages.ERROR_LOGIN_INCORRECT_MESSAGE;
 import static constants.Messages.ERROR_TOKEN_MESSAGE;
-import static data.UserCreateData.createUser;
+import static data.UserCreateData.createUserData;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static util.UserHelper.*;
 import static org.hamcrest.Matchers.*;
@@ -17,7 +17,7 @@ public class UserLoginTests extends BaseTest {
     @Test
     @DisplayName("Логин под существующим пользователем")
     public void loginWithExistsUserTest() {
-        user = createUser();
+        user = createUserData();
         registerUser(user);
         login = new LoginBodyDto(user.getEmail(), user.getPassword());
         Response response = loginUser(login);
@@ -37,7 +37,7 @@ public class UserLoginTests extends BaseTest {
     @Test
     @DisplayName("Логин с неверным логином и паролем")
     public void loginWithIncorrectPassword() {
-        user = createUser();
+        user = createUserData();
         Response responseFromRegister = registerUser(user);
         accessToken = getAccessToken(responseFromRegister);
         assertNotNull(accessToken, ERROR_TOKEN_MESSAGE);
